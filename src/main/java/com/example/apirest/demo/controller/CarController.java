@@ -1,8 +1,6 @@
 package com.example.apirest.demo.controller;
 
 import com.example.apirest.demo.exception.ResourceNotFoundException;
-import com.example.apirest.demo.model.Car;
-import com.example.apirest.demo.repository.CarRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +11,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1")
 public class CarController {
 
-    private final CarRepository carRepository;
+    /*private final CarRepository carRepository;
 
     public CarController(CarRepository carRepository) {
         this.carRepository = carRepository;
@@ -31,5 +29,5 @@ public class CarController {
     public ResponseEntity<Car> create(@RequestBody Car car) {
         carRepository.save(car);
         return ResponseEntity.status(HttpStatus.CREATED).body(car);
-    }
+    }*/
 }

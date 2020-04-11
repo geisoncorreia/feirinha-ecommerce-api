@@ -2,7 +2,7 @@ version: '2'
 services:
   db:
     image: postgres
-    container_name: postgres
+    container_name: postgres_feirinha_ecommerce
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
