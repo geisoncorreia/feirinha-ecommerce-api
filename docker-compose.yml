@@ -1,0 +1,12 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
+    volumes:
+      - /home/geison/Documents/workspace/enviroment/docker/bancos/postgresql-data:/var/lib/postgresql/data
