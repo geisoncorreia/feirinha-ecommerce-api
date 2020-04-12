@@ -1,5 +1,6 @@
 package com.example.apirest.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
@@ -17,11 +18,11 @@ public class Cliente {
     @Column(updatable = false, unique = true, nullable = false)
     private UUID id;
 
+    @Column
+    private String nome;
+
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Pessoa pessoa;
-
-    @OneToMany
-    private List<Campanha> campanhas;
-
 
 }

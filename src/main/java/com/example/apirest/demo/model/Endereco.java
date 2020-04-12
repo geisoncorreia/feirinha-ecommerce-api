@@ -15,6 +15,16 @@ public class Endereco {
     @Column(updatable = false, unique = true, nullable = false)
     private UUID id;
 
+    public Endereco() {
+    }
+
+    public Endereco(String logradouro, String numero, String cidade, String UF) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.UF = UF;
+    }
+
     @Column
     private String logradouro;
 

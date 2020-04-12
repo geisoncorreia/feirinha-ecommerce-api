@@ -1,5 +1,7 @@
 package com.example.apirest.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,8 +26,8 @@ public class Campanha {
     @Column
     private String fornecedor;
 
-    @Column
-    private String produto;
+    @ManyToOne
+    private Produto produto;
 
     @Column
     private BigDecimal preco;
@@ -36,6 +38,10 @@ public class Campanha {
     @Column
     private Date dataCricao;
 
-    @OneToMany
+    @Column
+    private String localEntrega;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<Cliente> interessados;
 }
