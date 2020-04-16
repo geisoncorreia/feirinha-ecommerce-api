@@ -1,6 +1,7 @@
 package com.api.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -19,7 +20,8 @@ public class Produto {
     private String nome;
 
     @ManyToOne
-    private Fornecedor fornecedor;
+    @Where(clause = "fornecedor.tipoPessoa = 2")
+    private Pessoa fornecedor;
 
     @ManyToOne
     private Preco preco;

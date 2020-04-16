@@ -36,7 +36,7 @@ public class BootstrapApp implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Cliente cliente = new Cliente();
+        /*Cliente cliente = new Cliente();
         cliente.setNome("Luiza Correia");
         cliente.setPessoa(
                 new Pessoa("Luiza Correia", 7, "luiza@gmail.com",
@@ -46,7 +46,7 @@ public class BootstrapApp implements CommandLineRunner {
         fornecedor.setNome("Fornecedor 1");
         fornecedor.setPessoa(
                 new Pessoa("Fornecedor 1", null, "fornecedor@gmail.com",
-                        new Endereco("AV sarará", "758", "Fortaleza", "CE")));
+                        new Endereco("AV sarará", "758", "Fortaleza", "CE")));*/
 
         Preco preco = new Preco();
         preco.setPreco(new BigDecimal("70.00"));
@@ -54,12 +54,12 @@ public class BootstrapApp implements CommandLineRunner {
 
         Produto produto = new Produto();
         produto.setDescricao("Castanha de Cajú orgânica natural");
-        produto.setFornecedor(fornecedor);
+//        produto.setFornecedor(fornecedor);
         produto.setNome("Castanha de Cajú");
         produto.setPreco(preco);
 
-        final Fornecedor fornecedorSalvo  = fornecedorRepository.save(fornecedor);
-        final Cliente clienteSalvo = clienteRepository.save(cliente);
+        /*final Fornecedor fornecedorSalvo  = fornecedorRepository.save(fornecedor);
+        final Cliente clienteSalvo = clienteRepository.save(cliente);*/
         final Preco precoSalvo = precoRepository.save(preco);
         final Produto produtoSalvo  = produtoRepository.save(produto);
 
@@ -68,13 +68,13 @@ public class BootstrapApp implements CommandLineRunner {
         campanha.setDescricao("Venda de Castanha");
         campanha.setDataCricao(new Date());
         campanha.setLocalEntrega("COOPERATIVA");
-        campanha.setFornecedor(fornecedorRepository.findById(fornecedorSalvo.getId()).get().getNome());
+//        campanha.setFornecedor(fornecedorRepository.findById(fornecedorSalvo.getId()).get().getNome());
         campanha.setPreco(precoRepository.findById(precoSalvo.getId()).get().getPreco());
         campanha.setProduto(produtoRepository.findById(produtoSalvo.getId()).get());
 
         campanha.setInteressados(new ArrayList<>());
-        campanha.getInteressados().add(clienteRepository
-                .findById(clienteSalvo.getId()).get());
+        /*campanha.getInteressados().add(clienteRepository
+                .findById(clienteSalvo.getId()).get());*/
 
         campanhaRepository.save(campanha);
         campanhaRepository.flush();

@@ -25,6 +25,9 @@ public class Pessoa {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private PessoaEnum tipoPessoa;
+
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Endereco endereco;

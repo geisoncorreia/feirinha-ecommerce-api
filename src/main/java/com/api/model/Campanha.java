@@ -40,7 +40,6 @@ public class Campanha {
     @Column
     private String localEntrega;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private List<Cliente> interessados;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Pessoa> interessados;
 }
