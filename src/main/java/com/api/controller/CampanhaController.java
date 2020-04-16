@@ -3,12 +3,8 @@ package com.api.controller;
 import com.api.builder.Builder;
 import com.api.builder.CampanhaBuilder;
 import com.api.dto.CampanhaDTO;
-import com.api.dto.ClienteDTO;
 import com.api.exception.ResourceNotFoundException;
 import com.api.model.Campanha;
-import com.api.model.Endereco;
-import com.api.model.Pessoa;
-import com.api.model.Produto;
 import com.api.repository.CampanhaRepository;
 import com.api.repository.ClienteRepository;
 import com.api.repository.ProdutoRepository;
@@ -18,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,16 +26,16 @@ public class CampanhaController {
     private CampanhaRepository campanhaRepository;
     private ProdutoRepository produtoRepository;
     private ClienteRepository clienteRepository;
-    private Builder<Campanha> campanhaBuilder;
+    private Builder<Campanha> builder;
 
     public CampanhaController(CampanhaRepository campanhaRepository,
                               ProdutoRepository produtoRepository,
                               ClienteRepository clienteRepository,
-                              Builder<Campanha> campanhaBuilder) {
+                              Builder<Campanha> builder) {
         this.campanhaRepository = campanhaRepository;
         this.produtoRepository = produtoRepository;
         this.clienteRepository = clienteRepository;
-        this.campanhaBuilder = campanhaBuilder;
+        this.builder = builder;
     }
 
     @GetMapping("/campanhas/")
@@ -65,7 +60,7 @@ public class CampanhaController {
     public ResponseEntity<Campanha> create(@RequestBody CampanhaDTO campanhaDTO) {
 
         try {
-            campanhaBuilder =
+            builder =
                     new CampanhaBuilder(produtoRepository, clienteRepository)
                             .addDataCricao(campanhaDTO.getDataCricao())
                             .addDescricao(campanhaDTO.getDescricao())
@@ -75,7 +70,7 @@ public class CampanhaController {
                             .addProduto(campanhaDTO.getProduto())
                             .addLocalEntrega(campanhaDTO.getLocalEntrega());
 
-            final Campanha campanha = campanhaBuilder.build();
+            final Campanha campanha = builder.build();
             this.campanhaRepository.save(campanha);
             return new ResponseEntity<Campanha>(HttpStatus.CREATED);
         } catch (Exception e) {

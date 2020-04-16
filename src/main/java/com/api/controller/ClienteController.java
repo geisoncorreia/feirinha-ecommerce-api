@@ -26,14 +26,14 @@ public class ClienteController {
 
     private ClienteRepository clienteRepository;
     private PessoaRepository pessoaRepository;
-    private Builder<Pessoa> clienteBuilder;
+    private Builder<Pessoa> builder;
 
     public ClienteController(ClienteRepository clienteRepository,
                              PessoaRepository pessoaRepository,
-                             Builder<Pessoa> clienteBuilder) {
+                             Builder<Pessoa> builder) {
         this.clienteRepository = clienteRepository;
         this.pessoaRepository = pessoaRepository;
-        this.clienteBuilder = clienteBuilder;
+        this.builder = builder;
     }
 
     @GetMapping("/clientes/")
@@ -56,7 +56,7 @@ public class ClienteController {
     public ResponseEntity<Pessoa> create(@RequestBody ClienteDTO clienteDTO) {
 
         try {
-            clienteBuilder =
+            builder =
                     new ClienteBuilder()
                             .addEmail(clienteDTO.getEmail())
                             .addEndereco(clienteDTO.getEndereco())
@@ -64,7 +64,7 @@ public class ClienteController {
                             .addNome(clienteDTO.getNome())
                             .addTipoPessoa(clienteDTO.getTipoPessoa());
 
-            final Pessoa cliente = clienteBuilder.build();
+            final Pessoa cliente = builder.build();
             this.clienteRepository.save(cliente);
             return new ResponseEntity<Pessoa>(HttpStatus.CREATED);
         } catch (Exception e) {
