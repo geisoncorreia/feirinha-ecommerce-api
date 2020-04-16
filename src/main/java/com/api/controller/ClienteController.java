@@ -4,6 +4,7 @@ import com.api.builder.Builder;
 import com.api.builder.ClienteBuilder;
 import com.api.dto.ClienteDTO;
 import com.api.exception.ResourceNotFoundException;
+import com.api.model.Campanha;
 import com.api.model.Endereco;
 import com.api.model.Pessoa;
 import com.api.repository.ClienteRepository;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,28 +26,37 @@ public class ClienteController {
 
     private ClienteRepository clienteRepository;
     private PessoaRepository pessoaRepository;
+    private Builder<Pessoa> clienteBuilder;
 
-
-    public ClienteController(ClienteRepository clienteRepository, PessoaRepository pessoaRepository) {
+    public ClienteController(ClienteRepository clienteRepository,
+                             PessoaRepository pessoaRepository,
+                             Builder<Pessoa> clienteBuilder) {
         this.clienteRepository = clienteRepository;
         this.pessoaRepository = pessoaRepository;
+        this.clienteBuilder = clienteBuilder;
     }
 
-    @GetMapping("/cliente/{id}")
-    public ResponseEntity<Pessoa> getClienteById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
+    @GetMapping("/clientes/")
+    public ResponseEntity<List<Pessoa>> getAll() {
+        if(clienteRepository.findAllCustomers().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        logger.info(clienteRepository.findAllCustomers());
+        return ResponseEntity.ok(clienteRepository.findAllCustomers());
+    }
 
+    @GetMapping("/clientes/{id}")
+    public ResponseEntity<Pessoa> getClienteById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
         Pessoa cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado para o id :: " + id));
-
         return ResponseEntity.ok().body(cliente);
     }
 
     @PostMapping(path = "/clientes", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Pessoa> salvar(@RequestBody ClienteDTO clienteDTO) {
+    public ResponseEntity<Pessoa> create(@RequestBody ClienteDTO clienteDTO) {
 
         try {
-
-            Builder<Pessoa> clienteBuilder =
+            clienteBuilder =
                     new ClienteBuilder()
                             .addEmail(clienteDTO.getEmail())
                             .addEndereco(clienteDTO.getEndereco())

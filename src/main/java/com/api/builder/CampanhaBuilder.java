@@ -67,6 +67,11 @@ public class CampanhaBuilder implements Builder<Campanha> {
         return this;
     }
 
+    public CampanhaBuilder addLocalEntrega(String localEntrega) {
+        this.localEntrega = localEntrega;
+        return this;
+    }
+
     public CampanhaBuilder addInteressados(List<UUID> interessados) {
         this.interessados = interessados;
         return this;
@@ -87,9 +92,9 @@ public class CampanhaBuilder implements Builder<Campanha> {
                     .orElseThrow(() -> new ResourceNotFoundException(
                             "Produto não encontrado para o id :: " + this.produto));
 
+            campanha.setInteressados(new ArrayList<>());
             this.interessados.forEach(i -> {
                 try {
-                    campanha.setInteressados(new ArrayList<>());
                     campanha.getInteressados().add(
                             clienteRepository.findById(i).orElseThrow(() -> new ResourceNotFoundException(
                                     "Cliente não encontrado para o id :: " + i)));

@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,16 +31,28 @@ public class CampanhaController {
     private CampanhaRepository campanhaRepository;
     private ProdutoRepository produtoRepository;
     private ClienteRepository clienteRepository;
+    private Builder<Campanha> campanhaBuilder;
 
     public CampanhaController(CampanhaRepository campanhaRepository,
                               ProdutoRepository produtoRepository,
-                              ClienteRepository clienteRepository) {
+                              ClienteRepository clienteRepository,
+                              Builder<Campanha> campanhaBuilder) {
         this.campanhaRepository = campanhaRepository;
         this.produtoRepository = produtoRepository;
         this.clienteRepository = clienteRepository;
+        this.campanhaBuilder = campanhaBuilder;
     }
 
-    @GetMapping("/campanha/{id}")
+    @GetMapping("/campanhas/")
+    public ResponseEntity<List<Campanha>> getAll() {
+        if(campanhaRepository.findAll().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        logger.info(campanhaRepository.findAll());
+        return ResponseEntity.ok(campanhaRepository.findAll());
+    }
+
+    @GetMapping("/campanhas/{id}")
     public ResponseEntity<Campanha> getCampanhaById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
 
         Campanha campanha = campanhaRepository.findById(id)
@@ -49,17 +62,18 @@ public class CampanhaController {
     }
 
     @PostMapping(path = "/campanhas", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Campanha> salvar(@RequestBody CampanhaDTO campanhaDTO) {
+    public ResponseEntity<Campanha> create(@RequestBody CampanhaDTO campanhaDTO) {
 
         try {
-            Builder<Campanha> campanhaBuilder =
+            campanhaBuilder =
                     new CampanhaBuilder(produtoRepository, clienteRepository)
                             .addDataCricao(campanhaDTO.getDataCricao())
                             .addDescricao(campanhaDTO.getDescricao())
                             .addFornecedor(campanhaDTO.getFornecedor())
                             .addInteressados(campanhaDTO.getInteressados())
                             .addPreco(campanhaDTO.getPreco())
-                            .addProduto(campanhaDTO.getProduto());
+                            .addProduto(campanhaDTO.getProduto())
+                            .addLocalEntrega(campanhaDTO.getLocalEntrega());
 
             final Campanha campanha = campanhaBuilder.build();
             this.campanhaRepository.save(campanha);
@@ -68,6 +82,5 @@ public class CampanhaController {
             return new ResponseEntity<Campanha>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }
