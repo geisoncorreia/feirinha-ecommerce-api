@@ -1,13 +1,14 @@
 package com.api.controller;
 
-import com.api.builder.Builder;
-import com.api.builder.CampanhaBuilder;
 import com.api.dto.CampanhaDTO;
 import com.api.exception.ResourceNotFoundException;
 import com.api.model.Campanha;
+import com.api.model.Produto;
 import com.api.repository.CampanhaRepository;
 import com.api.repository.ClienteRepository;
 import com.api.repository.ProdutoRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -17,33 +18,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class CampanhaController {
 
-    private static final Logger logger = LogManager.getLogger(CampanhaController.class);
-
-    private CampanhaRepository campanhaRepository;
-    private ProdutoRepository produtoRepository;
-    private ClienteRepository clienteRepository;
-    private Builder<Campanha> builder;
-
-    public CampanhaController(CampanhaRepository campanhaRepository,
-                              ProdutoRepository produtoRepository,
-                              ClienteRepository clienteRepository,
-                              Builder<Campanha> builder) {
-        this.campanhaRepository = campanhaRepository;
-        this.produtoRepository = produtoRepository;
-        this.clienteRepository = clienteRepository;
-        this.builder = builder;
-    }
+    final private CampanhaRepository campanhaRepository;
+    final private ProdutoRepository produtoRepository;
+    final private ClienteRepository clienteRepository;
 
     @GetMapping("/campanhas/")
     public ResponseEntity<List<Campanha>> getAll() {
         if(campanhaRepository.findAll().isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        logger.info(campanhaRepository.findAll());
+        log.info("findAll()");
         return ResponseEntity.ok(campanhaRepository.findAll());
     }
 
@@ -60,17 +50,30 @@ public class CampanhaController {
     public ResponseEntity<Campanha> create(@RequestBody CampanhaDTO campanhaDTO) {
 
         try {
-            builder =
-                    new CampanhaBuilder(produtoRepository, clienteRepository)
-                            .addDataCricao(campanhaDTO.getDataCricao())
-                            .addDescricao(campanhaDTO.getDescricao())
-                            .addFornecedor(campanhaDTO.getFornecedor())
-                            .addInteressados(campanhaDTO.getInteressados())
-                            .addPreco(campanhaDTO.getPreco())
-                            .addProduto(campanhaDTO.getProduto())
-                            .addLocalEntrega(campanhaDTO.getLocalEntrega());
 
-            final Campanha campanha = builder.build();
+            final Produto produto = produtoRepository.findById(campanhaDTO.getProduto())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "Produto não encontrado para o id :: " + campanhaDTO.getProduto()));
+
+            final Campanha campanha = Campanha.builder()
+                    .dataCricao(campanhaDTO.getDataCricao())
+                    .descricao(campanhaDTO.getDescricao())
+                    .localEntrega(campanhaDTO.getLocalEntrega())
+                    .preco(campanhaDTO.getPreco())
+                    .fornecedor(campanhaDTO.getFornecedor())
+                    .produto(produto)
+                    .build();
+
+            campanhaDTO.getInteressados().forEach(i -> {
+                try {
+                    campanha.getInteressados().add(
+                            clienteRepository.findById(i).orElseThrow(() -> new ResourceNotFoundException(
+                                    "Cliente não encontrado para o id :: " + i)));
+                } catch (ResourceNotFoundException e) {
+                    log.error(e.getMessage(), e);
+                }
+            });
+
             this.campanhaRepository.save(campanha);
             return new ResponseEntity<Campanha>(HttpStatus.CREATED);
         } catch (Exception e) {

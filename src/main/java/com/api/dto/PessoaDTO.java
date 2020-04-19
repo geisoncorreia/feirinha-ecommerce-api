@@ -1,9 +1,15 @@
 package com.api.dto;
 import com.api.model.PessoaEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class ClienteDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class PessoaDTO {
 
     private String nome;
     private Integer idade;

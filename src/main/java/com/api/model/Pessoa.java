@@ -1,12 +1,18 @@
 package com.api.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "pessoa")
 public class Pessoa {
@@ -31,16 +37,5 @@ public class Pessoa {
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Endereco endereco;
-
-    public Pessoa() {
-    }
-
-    public Pessoa(String nome, Integer idade, String email, Endereco endereco) {
-        this.nome = nome;
-        this.idade = idade;
-        this.email = email;
-        this.endereco = endereco;
-    }
-
 
 }
