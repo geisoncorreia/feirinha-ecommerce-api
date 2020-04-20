@@ -41,7 +41,7 @@ public class CampanhaController {
     public ResponseEntity<Campanha> getCampanhaById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
 
         Campanha campanha = campanhaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Campanha não encontrada para o id :: " + id));
+                .orElseThrow(ResourceNotFoundException::new);
 
         return ResponseEntity.ok().body(campanha);
     }
@@ -52,8 +52,7 @@ public class CampanhaController {
         try {
 
             final Produto produto = produtoRepository.findById(campanhaDTO.getProduto())
-                    .orElseThrow(() -> new ResourceNotFoundException(
-                            "Produto não encontrado para o id :: " + campanhaDTO.getProduto()));
+                    .orElseThrow(ResourceNotFoundException::new);
 
             final Campanha campanha = Campanha.builder()
                     .dataCricao(campanhaDTO.getDataCricao())
@@ -67,8 +66,7 @@ public class CampanhaController {
             campanhaDTO.getInteressados().forEach(i -> {
                 try {
                     campanha.getInteressados().add(
-                            clienteRepository.findById(i).orElseThrow(() -> new ResourceNotFoundException(
-                                    "Cliente não encontrado para o id :: " + i)));
+                            clienteRepository.findById(i).orElseThrow(ResourceNotFoundException::new));
                 } catch (ResourceNotFoundException e) {
                     log.error(e.getMessage(), e);
                 }

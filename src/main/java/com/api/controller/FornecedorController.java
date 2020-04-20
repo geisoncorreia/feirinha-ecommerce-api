@@ -5,6 +5,7 @@ import com.api.exception.ResourceNotFoundException;
 import com.api.mapper.EnderecoMapper;
 import com.api.model.Pessoa;
 import com.api.repository.FornecedorRepository;
+import com.api.service.FornecedorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
@@ -21,42 +22,25 @@ import java.util.UUID;
 @RequestMapping("/api/v1")
 public class FornecedorController {
 
-    final private FornecedorRepository fornecedorRepository;
-    final private EnderecoMapper enderecoMapper = Mappers.getMapper(EnderecoMapper.class);
+    final private FornecedorService fornecedorService;
 
     @GetMapping("/fornecedores/")
-    public ResponseEntity<List<Pessoa>> getAll() {
-        if(fornecedorRepository.findAllProviders().isEmpty()) {
+    public ResponseEntity<List<PessoaDTO>> getAll() {
+        if(fornecedorService.findAllProviders().isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         log.info("findAllProviders()");
-        return ResponseEntity.ok(fornecedorRepository.findAllProviders());
+        return ResponseEntity.ok(fornecedorService.findAllProviders());
     }
 
     @GetMapping("/fornecedores/{id}")
-    public ResponseEntity<Pessoa> getProvidersById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
-        Pessoa cliente = fornecedorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado para o id :: " + id));
-        return ResponseEntity.ok().body(cliente);
+    public ResponseEntity<PessoaDTO> getProvidersById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
+        log.info("getProvidersById()");
+        return ResponseEntity.ok().body(fornecedorService.findById(id));
     }
 
     @PostMapping(path = "/fornecedores", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Pessoa> create(@RequestBody PessoaDTO pessoaDTO) {
-
-        try {
-            final Pessoa cliente = Pessoa
-                    .builder()
-                    .email(pessoaDTO.getEmail())
-                    .endereco(enderecoMapper.enderecoDtoToEndereco(pessoaDTO.getEndereco()))
-                    .idade(pessoaDTO.getIdade())
-                    .nome(pessoaDTO.getNome())
-                    .tipoPessoa(pessoaDTO.getTipoPessoa())
-                    .build();
-
-            this.fornecedorRepository.save(cliente);
-            return new ResponseEntity<Pessoa>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<Pessoa>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<PessoaDTO> create(@RequestBody PessoaDTO pessoaDTO) {
+        return ResponseEntity.ok().body(fornecedorService.save(pessoaDTO));
     }
 }

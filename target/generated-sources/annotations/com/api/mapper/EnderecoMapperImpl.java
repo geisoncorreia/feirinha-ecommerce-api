@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-18T22:33:31-0300",
+    date = "2020-04-20T20:36:30-0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 11.0.5 (JetBrains s.r.o)"
 )
 public class EnderecoMapperImpl implements EnderecoMapper {

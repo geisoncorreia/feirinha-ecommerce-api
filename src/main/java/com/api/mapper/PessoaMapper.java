@@ -4,10 +4,18 @@ import com.api.dto.PessoaDTO;
 import com.api.model.Pessoa;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface PessoaMapper {
 
-    Pessoa clienteDTOToCliente(PessoaDTO pessoaDTO);
+    Pessoa pessoaDtoToPessoa(PessoaDTO pessoaDTO);
 
-    PessoaDTO pessoaDTOToPessoa(Pessoa pessoa);
+    PessoaDTO pessoaToPessoaDto(Pessoa pessoa);
+
+    List<Pessoa> listaPessoaDtoToListPessoa(List<PessoaDTO> listPessoaDTO);
+
+    List<PessoaDTO> listPessoaToListPessoaDto(List<Pessoa> listPessoa);
+
+
 }
