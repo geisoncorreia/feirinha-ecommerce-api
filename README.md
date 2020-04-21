@@ -4,7 +4,7 @@ Api com Spring boot, Hibernate/JPA, Lombok, Mapstruct, Spring Bean Validation, B
 
 Para acesso o os métodos via Swagger: http://localhost:8080/swagger-ui.html
 
-Para subir a intancia do Postgres use na raiz do projeto o camando:
+Para subir a instância do PostgreSql execute na raiz do projeto o camando:
 
 sudo docker-compose up --build -d
 
