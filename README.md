@@ -4,7 +4,7 @@ Staus: Em desemvolvimento
 
 Api que irá prover a infraestrutura de cadastros, relatórios, login e serviçoes para a criação de campanha de venda de produtos.
 
-Tecnologias aplicadas: Spring boot, Sprinf data, Spring MVC, Teste de integração com spring e banco H2, Hibernate/JPA, Lombok, Mapstruct, Spring Bean Validation, Banco PostgreSql, Docker, Swagger
+Tecnologias aplicadas: Spring boot, Spring data, Spring MVC, Teste de integração com spring e banco H2, Hibernate/JPA, Lombok, Mapstruct, Spring Bean Validation, Banco PostgreSql, Docker, Swagger
 
 Para acesso o os métodos via Swagger: http://localhost:8080/swagger-ui.html
 
