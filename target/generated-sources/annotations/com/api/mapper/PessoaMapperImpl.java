@@ -2,18 +2,15 @@ package com.api.mapper;
 
 import com.api.dto.EnderecoDTO;
 import com.api.dto.PessoaDTO;
-import com.api.dto.PessoaDTO.PessoaDTOBuilder;
 import com.api.model.Endereco;
-import com.api.model.Endereco.EnderecoBuilder;
 import com.api.model.Pessoa;
-import com.api.model.Pessoa.PessoaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-20T20:37:17-0300",
+    date = "2020-04-23T15:17:54-0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 11.0.5 (JetBrains s.r.o)"
 )
 public class PessoaMapperImpl implements PessoaMapper {
@@ -24,15 +21,15 @@ public class PessoaMapperImpl implements PessoaMapper {
             return null;
         }
 
-        PessoaBuilder pessoa = Pessoa.builder();
+        Pessoa pessoa = new Pessoa();
 
-        pessoa.nome( pessoaDTO.getNome() );
-        pessoa.idade( pessoaDTO.getIdade() );
-        pessoa.email( pessoaDTO.getEmail() );
-        pessoa.tipoPessoa( pessoaDTO.getTipoPessoa() );
-        pessoa.endereco( enderecoDTOToEndereco( pessoaDTO.getEndereco() ) );
+        pessoa.setNome( pessoaDTO.getNome() );
+        pessoa.setIdade( pessoaDTO.getIdade() );
+        pessoa.setEmail( pessoaDTO.getEmail() );
+        pessoa.setTipoPessoa( pessoaDTO.getTipoPessoa() );
+        pessoa.setEndereco( enderecoDTOToEndereco( pessoaDTO.getEndereco() ) );
 
-        return pessoa.build();
+        return pessoa;
     }
 
     @Override
@@ -41,15 +38,15 @@ public class PessoaMapperImpl implements PessoaMapper {
             return null;
         }
 
-        PessoaDTOBuilder pessoaDTO = PessoaDTO.builder();
+        PessoaDTO pessoaDTO = new PessoaDTO();
 
-        pessoaDTO.nome( pessoa.getNome() );
-        pessoaDTO.idade( pessoa.getIdade() );
-        pessoaDTO.email( pessoa.getEmail() );
-        pessoaDTO.tipoPessoa( pessoa.getTipoPessoa() );
-        pessoaDTO.endereco( enderecoToEnderecoDTO( pessoa.getEndereco() ) );
+        pessoaDTO.setNome( pessoa.getNome() );
+        pessoaDTO.setIdade( pessoa.getIdade() );
+        pessoaDTO.setEmail( pessoa.getEmail() );
+        pessoaDTO.setTipoPessoa( pessoa.getTipoPessoa() );
+        pessoaDTO.setEndereco( enderecoToEnderecoDTO( pessoa.getEndereco() ) );
 
-        return pessoaDTO.build();
+        return pessoaDTO;
     }
 
     @Override
@@ -85,14 +82,14 @@ public class PessoaMapperImpl implements PessoaMapper {
             return null;
         }
 
-        EnderecoBuilder endereco = Endereco.builder();
+        Endereco endereco = new Endereco();
 
-        endereco.logradouro( enderecoDTO.getLogradouro() );
-        endereco.numero( enderecoDTO.getNumero() );
-        endereco.cidade( enderecoDTO.getCidade() );
-        endereco.UF( enderecoDTO.getUF() );
+        endereco.setLogradouro( enderecoDTO.getLogradouro() );
+        endereco.setNumero( enderecoDTO.getNumero() );
+        endereco.setCidade( enderecoDTO.getCidade() );
+        endereco.setUF( enderecoDTO.getUF() );
 
-        return endereco.build();
+        return endereco;
     }
 
     protected EnderecoDTO enderecoToEnderecoDTO(Endereco endereco) {

@@ -22,6 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CampanhaController {
 
     final private CampanhaRepository campanhaRepository;
