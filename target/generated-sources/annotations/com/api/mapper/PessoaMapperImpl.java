@@ -10,7 +10,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-23T15:17:54-0300",
+    date = "2020-04-24T18:42:14-0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 11.0.5 (JetBrains s.r.o)"
 )
 public class PessoaMapperImpl implements PessoaMapper {
@@ -23,6 +23,7 @@ public class PessoaMapperImpl implements PessoaMapper {
 
         Pessoa pessoa = new Pessoa();
 
+        pessoa.setId( pessoaDTO.getId() );
         pessoa.setNome( pessoaDTO.getNome() );
         pessoa.setIdade( pessoaDTO.getIdade() );
         pessoa.setEmail( pessoaDTO.getEmail() );
@@ -40,6 +41,7 @@ public class PessoaMapperImpl implements PessoaMapper {
 
         PessoaDTO pessoaDTO = new PessoaDTO();
 
+        pessoaDTO.setId( pessoa.getId() );
         pessoaDTO.setNome( pessoa.getNome() );
         pessoaDTO.setIdade( pessoa.getIdade() );
         pessoaDTO.setEmail( pessoa.getEmail() );

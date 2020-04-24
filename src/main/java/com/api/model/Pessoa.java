@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.h2.api.DatabaseEventListener;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -32,10 +34,13 @@ public class Pessoa {
     private String email;
 
     @Column(nullable = false)
-    private PessoaEnum tipoPessoa;
+    private Integer tipoPessoa;
 
     @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Endereco endereco;
+
+    @Column()
+    private Date dataExclusao;
 
 }

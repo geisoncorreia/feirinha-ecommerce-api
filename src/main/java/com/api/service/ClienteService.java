@@ -14,4 +14,8 @@ public interface ClienteService {
     PessoaDTO findById(UUID id);
 
     PessoaDTO save(PessoaDTO cliente);
+
+    PessoaDTO update(UUID id, PessoaDTO pessoaDTO);
+
+    void delete(UUID id);
 }

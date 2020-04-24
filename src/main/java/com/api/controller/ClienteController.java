@@ -2,14 +2,9 @@ package com.api.controller;
 
 import com.api.dto.PessoaDTO;
 import com.api.exception.ResourceNotFoundException;
-import com.api.mapper.EnderecoMapper;
-import com.api.model.Pessoa;
-import com.api.repository.ClienteRepository;
-import com.api.repository.PessoaRepository;
 import com.api.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +40,17 @@ public class ClienteController {
     public ResponseEntity<PessoaDTO> create(@RequestBody PessoaDTO clienteDTO) {
         log.info("Novo Cliente");
         return new ResponseEntity<>(clienteService.save(clienteDTO), HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/clientes/{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<PessoaDTO> update(@PathVariable(value = "id") UUID id, @RequestBody PessoaDTO pessoaDTO) {
+        return new ResponseEntity<>(clienteService.update(id, pessoaDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/clientes/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable(value = "id") UUID id) {
+        clienteService.delete(id);
     }
 
 }
