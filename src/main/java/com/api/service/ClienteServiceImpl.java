@@ -5,6 +5,7 @@ import com.api.exception.ResourceNotFoundException;
 import com.api.mapper.EnderecoMapper;
 import com.api.mapper.PessoaMapper;
 import com.api.model.Pessoa;
+import com.api.model.PessoaEnum;
 import com.api.repository.ClienteRepository;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public PessoaDTO save(PessoaDTO cliente) {
+        cliente.setTipoPessoa(PessoaEnum.CLIENTE.getValor());
         return mapper.pessoaToPessoaDto(
                 clienteRepository.save(
                         mapper.pessoaDtoToPessoa(cliente)

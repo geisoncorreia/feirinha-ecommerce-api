@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface ClienteRepository extends JpaRepository<Pessoa, UUID> {
 
-    @Query(value = "select p.* from Pessoa p where p.tipo_pessoa = 1", nativeQuery=true)
+    @Query(value = "select p.* from Pessoa p where p.tipo_pessoa = 1 and p.data_exclusao is null", nativeQuery=true)
     public List<Pessoa> findAllCustomers();
 
     @Query(value = "select p.* from Pessoa p where p.id = :id and p.data_exclusao is null and p.tipo_pessoa = 1", nativeQuery=true)
