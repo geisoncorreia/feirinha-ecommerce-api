@@ -53,12 +53,11 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public PessoaDTO update(UUID id, PessoaDTO pessoaDTO) {
         final Pessoa cliente = clienteRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-
-        cliente.setTipoPessoa(pessoaDTO.getTipoPessoa());
+        cliente.setTipoPessoa(PessoaEnum.CLIENTE.getValor());
+        cliente.setNome(pessoaDTO.getNome());
         cliente.setIdade(pessoaDTO.getIdade());
         cliente.setEmail(pessoaDTO.getEmail());
         cliente.setEndereco(enderecoMapper.enderecoDtoToEndereco(pessoaDTO.getEndereco()));
-
         return mapper.pessoaToPessoaDto(clienteRepository.save(cliente));
     }
 
