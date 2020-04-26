@@ -46,7 +46,7 @@ public class CampanhaRepositoryIT {
         campanha.setDataCricao(new Date());
         campanha.setFornecedor(fornecedorRepository.
                 findById(UUID
-                        .fromString("60266679-9b74-469c-a96d-6f6cc45779a2")).get().getNome());
+                        .fromString("e9a4fd4a-118e-49db-a473-4c6607d4ace7")).get().getNome());
         campanha.setPreco(precoRepository
                 .findById(UUID
                         .fromString("b8627e52-ddf2-4bc2-a833-4003d632bcbd")).get().getPreco());
@@ -57,7 +57,7 @@ public class CampanhaRepositoryIT {
         campanha.setInteressados(new ArrayList<>());
         campanha.getInteressados().add(clienteRepository
                 .findById(UUID
-                        .fromString("74fc3892-0929-4f07-b66f-eac4b21ada0d")).get());
+                        .fromString("14ec51ec-5bef-4ae3-90c4-c862803fdcbd")).get());
 
         campanhaRepository.save(campanha);
         campanhaRepository.flush();
