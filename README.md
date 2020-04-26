@@ -8,9 +8,20 @@ Tecnologias aplicadas: Spring boot, Spring data, Spring MVC, Teste de integraç�
 
 Para acesso o os métodos via Swagger: http://localhost:8080/swagger-ui.html
 
-Para subir a instância do PostgreSql execute na raiz do projeto o camando:
+Execitar a aplicação
 
-sudo docker-compose up --build -d
+Na raiz do projeto:
+
+- Primeiro passo: Subir a instância do PostgreSql
+ -  Execute o camando:
+    
+    sudo docker-compose up --build -d
+
+- Segundo Passo: Subir a apliacão
+  - Execute o seguinte comando:
+  
+    ./mvnw spring-boot:run
+
 
 
 
