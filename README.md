@@ -8,7 +8,7 @@ Tecnologias aplicadas: Spring boot, Spring data, Spring MVC, Teste de integraç�
 
 Para acesso o os métodos via Swagger: http://localhost:8080/swagger-ui.html
 
-Execitar a aplicação
+Executar a aplicação
 
 Na raiz do projeto:
 
